@@ -746,3 +746,12 @@ if(BUILD_TESTING AND NOT BUILD_SHARED_LIBS)
           -P "${PROJECT_SOURCE_DIR}/cmake/RunTest.cmake")
   endif()
 endif()
+
+add_custom_command(
+    OUTPUT ${CMAKE_BINARY_DIR}/include
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/include ${CMAKE_BINARY_DIR}/include
+    DEPENDS ${opus_headers}
+)
+
+# 自定义目标，触发自定义命令
+add_custom_target(copy_headers ALL DEPENDS ${CMAKE_BINARY_DIR}/include)
